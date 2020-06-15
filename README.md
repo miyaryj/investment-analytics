@@ -1,0 +1,3 @@
+- Open the CSV by Numbers
+- Remove the unnecessary lines at the head
+- Export as a new CSV
