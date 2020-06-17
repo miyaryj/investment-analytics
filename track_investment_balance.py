@@ -63,7 +63,29 @@ if args.trade:
                     'amount': -stock[trade.銘柄コード]['price']
                 }, ignore_index=True)
     elif trade.取引 == '投信金額買付':
-        print('TODO ' + trade.取引)
+        if trade.銘柄 in stock:
+            stock[trade.銘柄] = {
+                'number': stock[trade.銘柄]['number'] + trade.約定数量,
+                'price': stock[trade.銘柄]['price'] + trade.約定数量 / 10000 * trade.約定単価
+            }
+        else:
+            stock[trade.銘柄] = {
+                'number': trade.約定数量,
+                'price': trade.約定数量 / 10000 * trade.約定単価
+            }
+    elif trade.取引 == '投信金額解約':
+        if trade.銘柄 in stock:
+            stock[trade.銘柄] = {
+                'number': stock[trade.銘柄]['number'] - trade.約定数量,
+                'price': stock[trade.銘柄]['price'] - trade.約定数量 / 10000 * trade.約定単価
+            }
+            if stock[trade.銘柄]['price'] < 0:
+                balance_df = balance_df.append({
+                    'date': trade.約定日,
+                    'reason': 'trade',
+                    'brand': trade.銘柄,
+                    'amount': -stock[trade.銘柄]['price']
+                }, ignore_index=True)
     else:
         print('Unknown trade type!!: ' + trade.取引)
 
