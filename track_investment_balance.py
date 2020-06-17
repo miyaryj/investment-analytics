@@ -38,6 +38,14 @@ if args.trade:
   
   stock = {}
   for trade in trade_df.itertuples():
+    # _11: 手数料/諸経費等
+    if trade._11.isdigit() > 0:
+        balance_df = balance_df.append({
+            'date': trade.約定日,
+            'reason': 'fee',
+            'brand': '',
+            'amount': -int(trade._11)
+        }, ignore_index=True)
     if trade.取引 == '株式現物買':
         if trade.銘柄コード in stock:
             stock[trade.銘柄コード] = {
@@ -62,7 +70,7 @@ if args.trade:
                     'brand': trade.銘柄,
                     'amount': -stock[trade.銘柄コード]['price']
                 }, ignore_index=True)
-    elif trade.取引 == '投信金額買付':
+    elif trade.取引 == '投信金額買付' or trade.取引 == '分配金再投資':
         if trade.銘柄 in stock:
             stock[trade.銘柄] = {
                 'number': stock[trade.銘柄]['number'] + trade.約定数量,
