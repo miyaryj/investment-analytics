@@ -63,7 +63,7 @@ if args.trade:
                 'number': stock[trade.銘柄コード]['number'] - trade.約定数量,
                 'price': stock[trade.銘柄コード]['price'] - trade.約定数量 * trade.約定単価
             }
-            if stock[trade.銘柄コード]['price'] < 0:
+            if stock[trade.銘柄コード]['number'] <= 0:
                 balance_df = balance_df.append({
                     'date': trade.約定日,
                     'reason': 'trade',
@@ -87,7 +87,7 @@ if args.trade:
                 'number': stock[trade.銘柄]['number'] - trade.約定数量,
                 'price': stock[trade.銘柄]['price'] - trade.約定数量 / 10000 * trade.約定単価
             }
-            if stock[trade.銘柄]['price'] < 0:
+            if stock[trade.銘柄]['number'] <= 0:
                 balance_df = balance_df.append({
                     'date': trade.約定日,
                     'reason': 'trade',
