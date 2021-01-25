@@ -5,7 +5,7 @@ Currently SBI sec. is only supported as the investment data.
 
 ## Preparation
 
-- Download CSVs of trade history and deposits inquiry
+- Download CSVs of trade history (取引履歴) and deposits inquiry （入出金明細）
 - Open the CSVs by Numbers
 - Remove the unnecessary lines at the head
 - Export as a new CSV
